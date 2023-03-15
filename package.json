@@ -1,0 +1,17 @@
+{
+  "name": "snowflake",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Manish",
+  "license": "ISC",
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.290.0",
+    "aws-sdk": "^2.1335.0",
+    "request": "^2.88.2",
+    "snowflake-sdk": "^1.6.19"
+  }
+}
