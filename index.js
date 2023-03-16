@@ -1,4 +1,4 @@
-var request = require('request');
+// var request = require('request');
 
 // var options = {
 //     'method': 'POST',
@@ -17,31 +17,62 @@ var request = require('request');
 //   });
 
 
-const accountName = 'ucb50334.us-east-1';
-const clientId = 'LMOo3NxFMbGBldZ7t36BPATPMs4';
-const clientSecret = 'ZNxaVrPLsMHy7gMWGUNkJXufUpu8ToYRb/1eY2xuSQ0=';
+// const accountName = 'ucb50334.us-east-1';
+// const clientId = 'LMOo3NxFMbGBldZ7t36BPATPMs4';
+// const clientSecret = 'ZNxaVrPLsMHy7gMWGUNkJXufUpu8ToYRb/1eY2xuSQ0=';
 // const scopes = '<scopes>';
 
-const options = {
-  url: `https://${accountName}.snowflakecomputing.com/oauth/token-request`,
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/x-www-form-urlencoded'
-  },
-  form: {
-    grant_type: 'client_credentials',
-    client_id: clientId,
-    client_secret: clientSecret,
+// const options = {
+//   url: `https://${accountName}.snowflakecomputing.com/oauth/token-request`,
+//   method: 'POST',
+//   headers: {
+//     'Content-Type': 'application/x-www-form-urlencoded'
+//   },
+//   form: {
+//     grant_type: 'client_credentials',
+//     client_id: clientId,
+//     client_secret: clientSecret,
     // scope: scopes
-  }
-};
+//   }
+// };
 
-request(options, (error, response, body) => {
-  if (error) {
-    console.error(error);
-  } else {
-    const responseBody = JSON.parse(body);
-    const accessToken = responseBody.access_token;
-    console.log('Access token:', responseBody);
+// request(options, (error, response, body) => {
+//   if (error) {
+//     console.error(error);
+//   } else {
+//     const responseBody = JSON.parse(body);
+//     const accessToken = responseBody.access_token;
+//     console.log('Access token:', responseBody);
+//   }
+// });
+const snowflake = require('snowflake-sdk');
+const connection = snowflake.createConnection({
+    account: 'wibjdgi-qdb04387',
+    username: 'Manish',
+    password: 'Manish@117',
+    database: 'SAMPLE_NEW',
+    schema: 'PUBLIC',
+    warehouse: 'SECOND_WH'
+  });
+
+  connection.connect((err, conn) => {
+    if (err) {
+      console.error('Unable to connect: ' + err.message);
+    } else {
+      console.log('Successfully connected to Snowflake.');
+    }
+  });
+  
+  const sql = 'SELECT * FROM student LIMIT 300';
+  const statement = connection.execute({
+  sqlText: sql,
+  complete: (err, stmt, rows) => {
+    if (err) {
+      console.error('Unable to execute query: ' + err.message);
+    } else {
+      console.log('Query executed successfully.');
+      console.log(rows.length);
+      console.log(rows);
+    }
   }
 });
